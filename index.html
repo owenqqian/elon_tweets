@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elon Musk Live Tweets</title>
     <style>
-        /* 全局暗黑风格设计 */
         :root {
             --bg-color: #000000;
-            --card-bg: #16181c;
-            --accent-color: #1d9bf0;
             --text-color: #f7f9f9;
         }
 
@@ -18,41 +15,29 @@
             padding: 0;
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        /* 顶部标题栏 */
         header {
-            position: sticky;
-            top: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
+            background-color: rgba(0, 0, 0, 0.9);
             border-bottom: 1px solid #2f3336;
             text-align: center;
             padding: 12px 0;
             z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
         }
 
-        header p {
-            margin: 4px 0 0 0;
-            font-size: 0.8rem;
-            color: #71767b;
-        }
-
-        /* 状态指示灯 */
         .live-dot {
             display: inline-block;
             width: 8px;
@@ -60,61 +45,32 @@
             background-color: #00ba7c;
             border-radius: 50%;
             margin-right: 6px;
-            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(1.2); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        /* 推文容器 */
         main {
             width: 100%;
-            max-width: 600px;
-            padding: 16px;
+            max-width: 650px;
+            height: calc(100vh - 50px);
             box-sizing: border-box;
-            flex: 1;
         }
 
-        /* 覆盖/适配 X 官方组件 */
-        .twitter-timeline-rendered {
-            border-radius: 16px !important;
-            overflow: hidden;
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- 顶部固定栏 -->
     <header>
         <h1><span class="live-dot"></span>Elon Musk 推文实时流</h1>
-        <p>自动同步 @elonmusk 最新动态</p >
     </header>
 
-    <!-- 主体：X 官方时间线嵌入组件 -->
     <main>
-        <a class="twitter-timeline" 
-           data-theme="dark" 
-           data-chrome="noheader nofooter transparent noborders"
-           data-tweet-limit="15"
-           href=" ">
-           加载中，正在连接 X 实时数据...
-        </a >
+        <!-- 使用稳定极简代理，绕过 X 官方未登录限制 -->
+        <iframe src="https://nitter.net/elonmusk" title="Elon Musk Tweets"></iframe>
     </main>
 
-    <!-- 官方异步加载 JS -->
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-    <!-- 自动刷新逻辑（可选） -->
-    <script>
-        // 设置每 3 分钟（180,000 毫秒）自动刷新页面以拉取最新推文
-        const REFRESH_INTERVAL = 3 * 60 * 1000;
-        
-        setTimeout(() => {
-            window.location.reload();
-        }, REFRESH_INTERVAL);
-    </script>
 </body>
 </html>
